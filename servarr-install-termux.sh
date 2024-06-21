@@ -142,7 +142,7 @@ if [[ $app == 'utils' ]]; then
         libmono-system-windows-forms4.0-cil libmono-system-xml-linq4.0-cil libmono-system-xml4.0-cil libmono-system4.0-cil \
         libmono-webbrowser4.0-cil libpipeline1 libpixman-1-0 libpng16-16 libtiff5 libtinyxml2-9 libwebp7 libxcb-render0 \
         libxcb-shm0 libxml2 libxrender1 libzen0v5 mono-4.0-gac mono-gac mono-runtime mono-runtime-common mono-runtime-sgen \
-        shared-mime-info sonarr tzdata ucf xdg-user-dirs -y
+        shared-mime-info tzdata ucf xdg-user-dirs -y
     sleep 1
     echo ""
     echo -e "${green}All utils have been installed!${reset} Run this script again to start installing *Arr programs."
