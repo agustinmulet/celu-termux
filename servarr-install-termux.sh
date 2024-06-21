@@ -122,27 +122,27 @@ if [[ $app == 'utils' ]]; then
     echo -e "   Some utils are going to be installed in order to be able to run *Arr programs."
     echo -e "   Sit back and relax as this might take some minutes..."
     sleep 1
-    apt install curl git nano wget binfmt-support binutils binutils-aarch64-linux-gnu binutils-common ca-certificates-mono cli-common fontconfig-config
-  	\ fonts-dejavu-core libbinutils libcairo2 libctf-nobfd0 libctf0 libdeflate0 libexif12 libfontconfig1 libfreetype6
-  	\ libgdiplus libgif7 libglib2.0-0 libglib2.0-data libicu70 libjbig0 libjpeg-turbo8 libjpeg8 libmediainfo0v5 libmms0
-  	\ libmono-accessibility4.0-cil libmono-btls-interface4.0-cil libmono-corlib4.5-cil libmono-corlib4.5-dll
-  	\ libmono-i18n-west4.0-cil libmono-i18n4.0-cil libmono-ldap4.0-cil libmono-messaging4.0-cil
-  	\ libmono-microsoft-csharp4.0-cil libmono-posix4.0-cil libmono-security4.0-cil libmono-sqlite4.0-cil
-  	\ libmono-system-componentmodel-dataannotations4.0-cil libmono-system-configuration-install4.0-cil
-  	\ libmono-system-configuration4.0-cil libmono-system-core4.0-cil libmono-system-data-datasetextensions4.0-cil
-  	\ libmono-system-data4.0-cil libmono-system-design4.0-cil libmono-system-drawing4.0-cil
-  	\ libmono-system-enterpriseservices4.0-cil libmono-system-identitymodel-selectors4.0-cil
-  	\ libmono-system-identitymodel4.0-cil libmono-system-io-compression4.0-cil libmono-system-ldap4.0-cil
-  	\ libmono-system-messaging4.0-cil libmono-system-net-http4.0-cil libmono-system-numerics4.0-cil
-  	\ libmono-system-runtime-serialization-formatters-soap4.0-cil libmono-system-runtime-serialization4.0-cil
-  	\ libmono-system-security4.0-cil libmono-system-servicemodel-activation4.0-cil
-  	\ libmono-system-servicemodel-internals0.0-cil libmono-system-servicemodel4.0a-cil
-  	\ libmono-system-serviceprocess4.0-cil libmono-system-transactions4.0-cil
-  	\ libmono-system-web-applicationservices4.0-cil libmono-system-web-services4.0-cil libmono-system-web4.0-cil
-  	\ libmono-system-windows-forms4.0-cil libmono-system-xml-linq4.0-cil libmono-system-xml4.0-cil libmono-system4.0-cil
-  	\ libmono-webbrowser4.0-cil libpipeline1 libpixman-1-0 libpng16-16 libtiff5 libtinyxml2-9 libwebp7 libxcb-render0
-  	\ libxcb-shm0 libxml2 libxrender1 libzen0v5 mono-4.0-gac mono-gac mono-runtime mono-runtime-common mono-runtime-sgen
-  	\ shared-mime-info sonarr tzdata ucf xdg-user-dirs -y
+    apt install curl git nano wget binfmt-support binutils binutils-aarch64-linux-gnu binutils-common ca-certificates-mono cli-common fontconfig-config \
+        fonts-dejavu-core libbinutils libcairo2 libctf-nobfd0 libctf0 libdeflate0 libexif12 libfontconfig1 libfreetype6 \
+        libgdiplus libgif7 libglib2.0-0 libglib2.0-data libicu70 libjbig0 libjpeg-turbo8 libjpeg8 libmediainfo0v5 libmms0 \
+        libmono-accessibility4.0-cil libmono-btls-interface4.0-cil libmono-corlib4.5-cil libmono-corlib4.5-dll \
+        libmono-i18n-west4.0-cil libmono-i18n4.0-cil libmono-ldap4.0-cil libmono-messaging4.0-cil \
+        libmono-microsoft-csharp4.0-cil libmono-posix4.0-cil libmono-security4.0-cil libmono-sqlite4.0-cil \
+        libmono-system-componentmodel-dataannotations4.0-cil libmono-system-configuration-install4.0-cil \
+        libmono-system-configuration4.0-cil libmono-system-core4.0-cil libmono-system-data-datasetextensions4.0-cil \
+        libmono-system-data4.0-cil libmono-system-design4.0-cil libmono-system-drawing4.0-cil \
+        libmono-system-enterpriseservices4.0-cil libmono-system-identitymodel-selectors4.0-cil \
+        libmono-system-identitymodel4.0-cil libmono-system-io-compression4.0-cil libmono-system-ldap4.0-cil \
+        libmono-system-messaging4.0-cil libmono-system-net-http4.0-cil libmono-system-numerics4.0-cil \
+        libmono-system-runtime-serialization-formatters-soap4.0-cil libmono-system-runtime-serialization4.0-cil \
+        libmono-system-security4.0-cil libmono-system-servicemodel-activation4.0-cil \
+        libmono-system-servicemodel-internals0.0-cil libmono-system-servicemodel4.0a-cil \
+        libmono-system-serviceprocess4.0-cil libmono-system-transactions4.0-cil \
+        libmono-system-web-applicationservices4.0-cil libmono-system-web-services4.0-cil libmono-system-web4.0-cil \
+        libmono-system-windows-forms4.0-cil libmono-system-xml-linq4.0-cil libmono-system-xml4.0-cil libmono-system4.0-cil \
+        libmono-webbrowser4.0-cil libpipeline1 libpixman-1-0 libpng16-16 libtiff5 libtinyxml2-9 libwebp7 libxcb-render0 \
+        libxcb-shm0 libxml2 libxrender1 libzen0v5 mono-4.0-gac mono-gac mono-runtime mono-runtime-common mono-runtime-sgen \
+        shared-mime-info sonarr tzdata ucf xdg-user-dirs -y
     sleep 1
     echo ""
     echo -e "${green}All utils have been installed!${reset} Run this script again to start installing *Arr programs."
