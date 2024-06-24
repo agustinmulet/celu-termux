@@ -16,9 +16,10 @@
 
     NAME=sonarr
     DESC="Sonarr"
+    MONO=$(which mono)
 
     DAEMON=/usr/lib/sonarr/bin/Sonarr.exe
-    DAEMONOPTS="-nobrowser"
+    DAEMONOPTS=""
 
     PIDDIR=/var/run/${NAME}
     PIDFILE=${PIDDIR}/${NAME}.pid
@@ -30,6 +31,7 @@
     DATADIR=$datadir
 
     if ! [ -r ${DAEMON} ]; then echo "Can't read: ${DAEMON}" 2>&1; exit 1; fi
+    if ! [ -x ${MONO} ]; then echo "Not executable: ${MONO}" 2>&1; exit 1; fi
     if ! [ -d ${DATADIR} ]; then echo "No such directory: ${DATADIR}" 2>&1; exit 1; fi
 
     if [ ! -d ${PIDDIR} ]; then
@@ -48,7 +50,7 @@
             if pgrep -f "^${DAEMON}" > /dev/null 2>&1; then
                     log_progress_msg "(already running?)"
             else
-                    start-stop-daemon -q -c $RUNAS --start --background --make-pidfile --pidfile $PIDFILE --exec .$DAEMON $DAEMON_OPTS
+                    start-stop-daemon -q -c $RUNAS --start --background --make-pidfile --pidfile $PIDFILE --exec $MONO -- $DAEMON $DAEMON_OPTS
                     RETVAL=$?
             fi
             log_end_msg $RETVAL
