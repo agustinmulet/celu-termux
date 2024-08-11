@@ -19,7 +19,8 @@
 ### Version v3.0.10 2024-01-04 - Bakerboy448 - Misc updates and refactoring. Move to own script file.
 ### Version v3.0.11 2024-01-06 - StevieTV - Exit script when ran from installdir
 ### Version v3.0.12 2024-04-09 - nostrus-dominion - moved root check, added title splash, added colors, attempted to improve readability, check for installed prerequisites before bothering apt, supressed tarball extraction, added some sleep timers.
-### Version v3.0.13 2024-06-18 - agustinmulet - Modified script to be able to install everything in ubuntu-in-termux inside termux
+### Version v3.0.13 2024-06-18 - agustinmulet - Modified script to be able to install everything in a distro inside termux
+### Version v3.0.14 2024-07-07 - agustinmulet - Added Sonarr v4 to installer options
 ### Additional Updates by: The Servarr Community
 
 ### Boilerplate Warning
@@ -38,8 +39,8 @@ red='\033[0;31m'
 brown='\033[0;33m'
 reset='\033[0m' # No Color
 
-scriptversion="3.0.13"
-scriptdate="2024-06-18" # change this later
+scriptversion="3.0.14"
+scriptdate="2024-07-07" # change this later
 
 set -euo pipefail
 
@@ -69,7 +70,7 @@ echo "Running Servarr Install Script - Version ${brown}[$scriptversion]${reset} 
 echo ""
 echo "Select the application to install: "
 echo ""
-select app in lidarr prowlarr radarr readarr whisparr quit; do
+select app in lidarr prowlarr radarr sonarr readarr whisparr quit; do
 
     case $app in
     lidarr)
@@ -79,15 +80,21 @@ select app in lidarr prowlarr radarr readarr whisparr quit; do
         break
         ;;
     prowlarr)
-        app_port="9696"           # Default App Port; Modify config.xml after install if needed
-        app_prereq="curl sqlite3" # Required packages
-        branch="master"           # {Update me if needed} branch to install
+        app_port="9696"                         # Default App Port; Modify config.xml after install if needed
+        app_prereq="curl sqlite3 libicu-dev"    # Required packages
+        branch="master"                         # {Update me if needed} branch to install
         break
         ;;
     radarr)
         app_port="7878"           # Default App Port; Modify config.xml after install if needed
         app_prereq="curl sqlite3" # Required packages
         branch="master"           # {Update me if needed} branch to install
+        break
+        ;;
+    sonarr)
+        app_port="8989"                             # Default App Port; Modify config.xml after install if needed
+        app_prereq="curl sqlite3 wget libicu-dev"   # Required packages
+        branch="main"                               # {Update me if needed} branch to install
         break
         ;;
     readarr)
@@ -236,8 +243,15 @@ fi
 # check if architecture is correct
 echo ""
 ARCH=$(dpkg --print-architecture)
+
+# get different URL for Sonarr, fetch v4. Also set line to be used on service script if Sonarr is selected
+if [[ $app = 'sonarr' ]]; then
+    dlbase="https://services.sonarr.tv/v1/download/$branch/latest?version=4&os=linux"
+else
+    dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore"
+fi
+
 # get arch
-dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore"
 case "$ARCH" in
 "amd64") DLURL="${dlbase}&arch=x64" ;;
 "armhf") DLURL="${dlbase}&arch=arm" ;;
@@ -406,7 +420,7 @@ echo ""
 echo -e "${brown}[${app^}]${reset} is attempting to start, this may take a few seconds..."
 chmod +x /etc/init.d/"$app"
 service "$app" start
-sleep 2
+sleep 8
 
 # Check if the service is up and running
 echo ""
@@ -425,19 +439,15 @@ host=$(hostname -I)
 ip_local=$(grep -oP '^\S*' <<<"$host")
 echo ""
 echo -e "Attempting to check for a connection at http://$ip_local:$app_port..."
-sleep 2
+sleep 8
 STATUS="$(service "$app" status)"
 RUNNING="$(echo $STATUS | awk 'END {print $(NF-1), $NF}')"
 if [ "${RUNNING}" = "is running" ]; then
     echo ""
     echo "Successful connection!"
     echo ""
-    echo -e ${yellow}"Cleaning up, removing tarballs..."${reset}
-    sleep 1
-    # -f to Force so we do not fail if it doesn't exist
-    rm -f "${app^}".*.tar.gz
-    sleep 1
-    echo ""
+    sleep 3
+
     echo -e "Browse to ${green}http://$ip_local:$app_port${reset} for the GUI."
     echo ""
     echo "Script complete! Exiting now!"
@@ -447,8 +457,16 @@ else
     echo -e ${red}"${app^} failed to start."${reset}
     echo ""
     echo "Please try again. Exiting script."
-    echo
+    echo ""
 fi
+
+echo ""
+echo -e ${yellow}"Cleaning up, removing tarballs..."${reset}
+sleep 1
+# -f to Force so we do not fail if it doesn't exist
+rm -f "${app^}".*.tar.gz
+echo ""
+
 sleep 1
 # Exit
 exit 0
